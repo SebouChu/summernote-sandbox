@@ -11,7 +11,10 @@
 
   <body>
     <div class="container mt-4">
-      <p class="alert alert-info" id="notice"><%= notice %></p>
+      <% unless notice.nil? %>
+        <p class="alert alert-info" id="notice"><%= notice %></p>
+      <% end %>
+      
       <%= yield %>
     </div>
   </body>

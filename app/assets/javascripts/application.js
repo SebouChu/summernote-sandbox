@@ -3,4 +3,5 @@
 //= require jquery3
 //= require popper
 //= require bootstrap
-//= require_tree .
+//= require summernote/summernote-bs4.min
+//= require_tree ./commons
