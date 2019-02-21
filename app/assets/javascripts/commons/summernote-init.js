@@ -1,8 +1,35 @@
-/*global $, document, window */
+/*global $, document, window, console, FormData */
+
+var sendFile = function (file, toSummernote) {
+    'use strict';
+    var data;
+    data = new FormData();
+    data.append('file', file);
+    $.ajax({
+        data: data,
+        type: 'POST',
+        url: '/uploads',
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            console.log('file uploading...');
+            if (data.errors !== undefined && data.errors !== null) {
+                console.log('ops! errors...');
+                return $.each(data.errors, function (key, messages) {
+                    return $.each(messages, function (key, message) {
+                        return window.alert(message);
+                    });
+                });
+            }
+            console.log('inserting image in to editor...');
+            return toSummernote.summernote('insertImage', data.url);
+        }
+    });
+};
 
 window.summernoteConfig = {
     height: 400,
-    disableDragAndDrop: true,
     callbacks: {
         onPaste: function (event) {
             'use strict';
@@ -24,6 +51,10 @@ window.summernoteConfig = {
                 $target = $target.children().first();
             }
             onFormatBlock($target.prop('tagName'), $target);
+        },
+        onImageUpload: function (files, e) {
+            'use strict';
+            sendFile(files[0], $(this));
         }
     },
     toolbar: [
