@@ -1,5 +1,10 @@
 /*global $, document, window, console, FormData */
 
+$.extend($.summernote.lang['en-US'].image, {
+    dragImageHere: 'Drag image here',
+    dropImage: 'Drop image'
+});
+
 var sendFile = function (file, toSummernote) {
     'use strict';
     var data;
@@ -23,7 +28,7 @@ var sendFile = function (file, toSummernote) {
                 });
             }
             console.log('inserting image in to editor...');
-            return toSummernote.summernote('insertImage', data.url);
+            return toSummernote.summernote('pasteHTML', data.node);
         }
     });
 };
