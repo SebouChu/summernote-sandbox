@@ -1,0 +1,29 @@
+<%
+alt ||= ''
+width ||= nil
+height ||= nil
+variant_service = ActiveStorage::VariantService.new(image, width, height)
+image_class = 'image'
+image_class += ' image--cutout' if image.metadata[:cutout] == true
+
+default_image_source = variant_service.get_variant(1920)
+default_image_source ||= image # image_width < 1920
+%>
+<div class="<%= image_class %>">
+  <img src="<%= url_for(default_image_source) %>"
+      srcset="
+        <%
+        # We provide different versions for different screen widths
+        [1920, 1600, 1440, 1366, 1280, 1024, 800, 768, 640, 360, 200].each do |screen_width| %>
+          <%
+          variant = variant_service.get_variant(screen_width)
+          next if variant.nil?
+          %>
+          <%= url_for(variant) %> <%= screen_width %>w,
+        <% end %>
+      "
+      width="<%= image.metadata[:width].to_i %>"
+      sizes="100vw"
+      alt="<%= sanitize alt.html_safe %>"
+      class="img-fluid">
+</div>
