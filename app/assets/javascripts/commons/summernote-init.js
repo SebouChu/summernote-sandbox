@@ -63,9 +63,15 @@ window.summernoteConfig = {
         ['alignment', ['ul', 'ol', 'paragraph']],
         ['insert', ['hr']],
         ['link', ['linkDialogShow', 'unlink']],
+        ['media', ['picture']],
         ['code', ['codeview']]
     ],
-    styleTags: ['p', 'blockquote', 'pre', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']
+    styleTags: ['p', 'blockquote', 'pre', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+    popover: {
+        image: [
+            ['remove', ['removeMedia']]
+        ]
+    }
 };
 
 $(function () {
